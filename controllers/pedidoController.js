@@ -38,16 +38,8 @@ async function generarNumeroPedidoUnico() {
 };
 
 exports.obtener_pedido = async (req, res) => {
-    var id = req.params['id'];
-
-    try {
-        var reg = await Pedido.findOne({numero_pedido:id});
-
+        var filtro = req.params['filtro'];
+    
+        let reg = await Pedido.find({numero_pedido: new RegExp(filtro, 'i')});
         res.status(200).send({data:reg});
-
-    }
-
-    catch (err) {
-        res.status(200).send({data:undefined});
-    }
-};
+    };
