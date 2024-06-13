@@ -26,6 +26,8 @@ router.get('/listar_productos_publico/:filtro?',productoController.listar_produc
 router.get('/listar_productos_publico_bot/:filtro?',productoController.listar_productos_publico_bot);
 router.get('/obtener_productos_slug_publico/:slug',productoController.obtener_productos_slug_publico);
 router.get('/listar_productos_recomendados_publico/:categoria',productoController.listar_productos_recomendados_publico);
+router.get('/listar_titulos_productos_publico_bot/:filtro?',productoController.listar_titulos_productos_publico_bot);
+
 
 router.get('/recommendations/:productId', async (req, res) => {
     try {
