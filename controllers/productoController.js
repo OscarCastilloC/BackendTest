@@ -368,20 +368,19 @@ exports.listar_titulos_productos_publico_bot = async (req, res) => {
     try {
         const filtro = req.params.filtro;
 
-        // Buscar productos que coincidan con el filtro en el título y tengan stock mayor que 0
+        // Buscar productos que coincidan con el filtro en el título y tengan stock mayor que 1
         const productos = await Producto.find({ 
             titulo: new RegExp(filtro, 'i'),
-            stock: { $gt: 0 } // Verificar que el stock sea mayor que 0
+            stock: { $gt: 0 } // Verificar que el stock sea mayor que 1
         })
         .select('titulo')
         .sort({ createdAt: -1 });
 
-        if (productos.length > 0) {
-            const titulos = productos.map(producto => producto.titulo);
-            res.status(200).json({ titulos });
-        } else {
-            res.status(200).json({ titulos: [] });
-        }
+        // Extraer solo los títulos de los productos encontrados
+        const titulos = productos.map(producto => producto.titulo);
+
+        // Enviar los títulos en la respuesta
+        res.status(200).json({ titulos });
     } catch (error) {
         console.error('Error al buscar productos:', error);
         res.status(500).json({ error: 'Error al buscar productos' });
