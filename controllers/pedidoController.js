@@ -35,4 +35,24 @@ async function generarNumeroPedidoUnico() {
     }
 
     return numeroPedido;
-}
+};
+
+exports.obtener_pedido = async (req, res) => {
+    try {
+        const numeroPedido = req.params.numeroPedido;
+
+        // Buscar el pedido por su número de pedido
+        const pedido = await Pedido.findOne({ numero_pedido: numeroPedido });
+
+        if (pedido) {
+            // Enviar los datos del pedido si se encuentra
+            res.status(200).send({ data: pedido });
+        } else {
+            // Enviar un mensaje de error si el pedido no se encuentra
+            res.status(404).send({ message: 'Pedido no encontrado' });
+        }
+    } catch (error) {
+        console.error('Error al buscar el pedido:', error);
+        res.status(500).send({ message: 'Error del servidor' });
+    }
+};
